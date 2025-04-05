@@ -1,0 +1,15 @@
+{
+  "name": "@mx1014/plugin-html-print",
+  "version": "1.6.14",
+  "main": "./dist/server/index.js",
+  "displayName": "html-print",
+  "displayName.zh-CN": "模板打印",
+  "description": "NocoBase HTML Template Print",
+  "description.zh-CN": "NocoBase  HTML模板打印插件",
+  "dependencies": {},
+  "peerDependencies": {
+    "@nocobase/client": "1.x",
+    "@nocobase/server": "1.x",
+    "@nocobase/test": "1.x"
+  }
+}
