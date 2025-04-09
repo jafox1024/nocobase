@@ -5,6 +5,100 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.6.17](https://github.com/nocobase/nocobase/compare/v1.6.16...v1.6.17) - 2025-04-09
+
+### 🚀 Improvements
+
+- **[utils]** Add duration extension for dayjs ([#6630](https://github.com/nocobase/nocobase/pull/6630)) by @mytharcher
+
+- **[client]**
+  - Support to search field in Filter component ([#6627](https://github.com/nocobase/nocobase/pull/6627)) by @mytharcher
+
+  - Add `trim` API for `Input` and `Variable.TextArea` ([#6624](https://github.com/nocobase/nocobase/pull/6624)) by @mytharcher
+
+- **[Error handler]** Support custom title in AppError component. ([#6409](https://github.com/nocobase/nocobase/pull/6409)) by @sheldon66
+
+- **[IP restriction]** Update IP restriction message content. by @sheldon66
+
+- **[File storage: S3(Pro)]** Support global variables in storage configuration by @mytharcher
+
+### 🐛 Bug Fixes
+
+- **[client]**
+  - rule with 'any' condition does not take effect when condition list is empty ([#6628](https://github.com/nocobase/nocobase/pull/6628)) by @katherinehhh
+
+  - data issue with Gantt block in tree collection ([#6617](https://github.com/nocobase/nocobase/pull/6617)) by @katherinehhh
+
+  - The relationship fields in the filter form report an error after the page is refreshed because x-data-source is not carried ([#6619](https://github.com/nocobase/nocobase/pull/6619)) by @zhangzhonghe
+
+  - variable parse failure when URL parameters contain Chinese characters ([#6618](https://github.com/nocobase/nocobase/pull/6618)) by @katherinehhh
+
+- **[Users]** Issue with parsing the user profile form schema ([#6635](https://github.com/nocobase/nocobase/pull/6635)) by @2013xile
+
+- **[Mobile]** single-select field with 'contains' filter on mobile does not support multiple selection ([#6629](https://github.com/nocobase/nocobase/pull/6629)) by @katherinehhh
+
+- **[Action: Export records]** missing filter params when exporting data after changing pagination ([#6633](https://github.com/nocobase/nocobase/pull/6633)) by @katherinehhh
+
+- **[Email manager]** fix email management permission cannot view email list by @jiannx
+
+- **[File storage: S3(Pro)]** Throw error to user when upload logo to S3 Pro storage (set to default) by @mytharcher
+
+- **[Workflow: Approval]** Fix `updatedAt` changed after migration by @mytharcher
+
+- **[Migration manager]** migration log creation time is displayed incorrectly in some environments by @gchust
+
+## [v1.6.16](https://github.com/nocobase/nocobase/compare/v1.6.15...v1.6.16) - 2025-04-03
+
+### 🐛 Bug Fixes
+
+- **[client]**
+  - x-disabled property not taking effect on form fields ([#6610](https://github.com/nocobase/nocobase/pull/6610)) by @katherinehhh
+
+  - field label display issue to prevent truncation by colon ([#6599](https://github.com/nocobase/nocobase/pull/6599)) by @katherinehhh
+
+- **[database]** When deleting one-to-many records, both `filter` and `filterByTk` are passed and `filter` includes an association field, the `filterByTk` is ignored ([#6606](https://github.com/nocobase/nocobase/pull/6606)) by @2013xile
+
+## [v1.6.15](https://github.com/nocobase/nocobase/compare/v1.6.14...v1.6.15) - 2025-04-01
+
+### 🚀 Improvements
+
+- **[database]**
+  - Add trim option for text field ([#6603](https://github.com/nocobase/nocobase/pull/6603)) by @mytharcher
+
+  - Add trim option for string field ([#6565](https://github.com/nocobase/nocobase/pull/6565)) by @mytharcher
+
+- **[File manager]** Add trim option for text fields of storages collection ([#6604](https://github.com/nocobase/nocobase/pull/6604)) by @mytharcher
+
+- **[Workflow]** Improve code ([#6589](https://github.com/nocobase/nocobase/pull/6589)) by @mytharcher
+
+- **[Workflow: Approval]** Support to use block template for approval process form by @mytharcher
+
+### 🐛 Bug Fixes
+
+- **[database]** Avoid "datetimeNoTz" field changes when value not changed in updating record ([#6588](https://github.com/nocobase/nocobase/pull/6588)) by @mytharcher
+
+- **[client]**
+  - association field (select) displaying N/A when exposing related collection fields ([#6582](https://github.com/nocobase/nocobase/pull/6582)) by @katherinehhh
+
+  - Fix `disabled` property not works when `SchemaInitializerItem` has `items` ([#6597](https://github.com/nocobase/nocobase/pull/6597)) by @mytharcher
+
+  - cascade  issue: 'The value of xxx cannot be in array format' when deleting and re-selecting ([#6585](https://github.com/nocobase/nocobase/pull/6585)) by @katherinehhh
+
+- **[Collection field: Many to many (array)]** Issue of filtering by fields in an association collection with a many to many (array) field ([#6596](https://github.com/nocobase/nocobase/pull/6596)) by @2013xile
+
+- **[Public forms]** View permissions include list and get ([#6607](https://github.com/nocobase/nocobase/pull/6607)) by @chenos
+
+- **[Authentication]** token assignment in `AuthProvider` ([#6593](https://github.com/nocobase/nocobase/pull/6593)) by @2013xile
+
+- **[Workflow]** Fix sync option display incorrectly ([#6595](https://github.com/nocobase/nocobase/pull/6595)) by @mytharcher
+
+- **[Block: Map]** map management validation should not pass with space input ([#6575](https://github.com/nocobase/nocobase/pull/6575)) by @katherinehhh
+
+- **[Workflow: Approval]**
+  - Fix client variables to use in approval form by @mytharcher
+
+  - Fix branch mode when `endOnReject` configured as `true` by @mytharcher
+
 ## [v1.6.14](https://github.com/nocobase/nocobase/compare/v1.6.13...v1.6.14) - 2025-03-29
 
 ### 🐛 Bug Fixes
