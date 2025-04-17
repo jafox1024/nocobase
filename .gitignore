@@ -3,6 +3,7 @@ lib/
 esm/
 es/
 .env
+.log
 .env.e2e
 .DS_Store
 yarn-error.log
@@ -32,3 +33,4 @@ ncc-cache/
 yarn--**
 v8-compile-cache-**
 vitest.config.mts.timestamp-*
+npminstall-debug.log

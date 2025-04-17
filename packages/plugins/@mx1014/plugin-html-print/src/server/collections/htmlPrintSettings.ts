@@ -17,15 +17,15 @@ export default defineCollection({
       name: 'title',
     },
     {
-      type: 'markdown',
+      type: 'text',
       name: 'head',
     },
     {
-      type: 'markdown',
+      type: 'text',
       name: 'body',
     },
     {
-      type: 'markdown',
+      type: 'text',
       name: 'tail',
     },
     {

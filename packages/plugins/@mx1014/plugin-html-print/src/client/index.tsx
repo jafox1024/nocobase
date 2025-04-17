@@ -7,18 +7,17 @@
  * For more information, please refer to: https://www.nocobase.com/agreement.
  */
 
-import { Plugin, SchemaInitializerItem, SchemaSettings, useSchemaInitializer } from '@nocobase/client';
-import { PluginSettingsTableProvider } from './PluginSettingsTableProvider';
+import { Plugin } from '@nocobase/client';
+import { createPrintActionModalInitializerItem } from './initializer';
 import { PluginSettingsTable } from './PluginSettingsTable';
+import { PluginSettingsTableProvider } from './PluginSettingsTableProvider';
+import { printActionModalSettings } from './settings';
 
 export class PluginHtmlPrintClient extends Plugin {
-  async afterAdd() {
-    // await this.app.pm.add()
-  }
+  async afterAdd() {}
 
   async beforeLoad() {}
 
-  // You can get and modify the app instance here
   async load() {
     console.log(this.app);
     this.app.pluginSettingsManager.add('plugin-html-print', {
@@ -29,19 +28,22 @@ export class PluginHtmlPrintClient extends Plugin {
     });
     this.app.addProvider(PluginSettingsTableProvider);
 
-    // const initializerData = {
-    //   title: '{{t("Print")}}',
-    //   Component: 'PrintActionInitializer',
-    //   schema: {
-    //     'x-component': 'Action',
-    //     'x-toolbar': 'ActionSchemaToolbar',
-    //     'x-settings': 'actionSettings:print',
-    //     'x-action': 'print',
-    //   },
-    // };
-
-    // this.app.schemaInitializerManager.addItem('details:configureActions', 'enableActions.print', initializerData);
-    // this.app.schemaInitializerManager.addItem('CalendarFormActionInitializers', 'enableActions.print', initializerData);
+    this.app.schemaSettingsManager.add(printActionModalSettings);
+    this.app.schemaInitializerManager.addItem(
+      'details:configureActions',
+      'print',
+      createPrintActionModalInitializerItem('details'),
+    );
+    this.app.schemaInitializerManager.addItem(
+      'table:configureActions',
+      'print',
+      createPrintActionModalInitializerItem('table-v2'),
+    );
+    this.app.schemaInitializerManager.addItem(
+      'createForm:configureActions',
+      'print',
+      createPrintActionModalInitializerItem('form-v2'),
+    );
   }
 }
 
