@@ -37,37 +37,9 @@ class AppGenerator extends Generator {
     return items;
   }
 
-  checkDbEnv() {
-    const dialect = this.args.dbDialect;
-    const env = this.env;
-    if (dialect === 'sqlite') {
-      return;
-    }
-    if (!env.DB_DATABASE || !env.DB_USER || !env.DB_PASSWORD) {
-      console.log(
-        chalk.red(
-          `Please set DB_HOST, DB_PORT, DB_DATABASE, DB_USER, DB_PASSWORD in .env file to complete database settings`,
-        ),
-      );
-    }
-  }
-
   checkProjectPath() {
     if (existsSync(this.cwd)) {
       console.log(chalk.red('Project directory already exists'));
-      process.exit(1);
-    }
-  }
-
-  checkDialect() {
-    const dialect = this.args.dbDialect;
-    const supportDialects = ['mysql', 'mariadb', 'postgres'];
-    if (!supportDialects.includes(dialect)) {
-      console.log(
-        `dialect ${chalk.red(dialect)} is not supported, currently supported dialects are ${chalk.green(
-          supportDialects.join(','),
-        )}.`,
-      );
       process.exit(1);
     }
   }
@@ -77,11 +49,6 @@ class AppGenerator extends Generator {
     const envs = [];
     const dependencies = [];
     const { dbDialect } = this.args;
-
-    dependencies.push(`"mysql2": "^3.14.0"`);
-    dependencies.push(`"mariadb": "^3.4.1"`);
-    dependencies.push(`"pg": "^8.14.1"`);
-    dependencies.push(`"pg-hstore": "^2.3.4"`);
 
     switch (dbDialect) {
       case 'mysql':
@@ -158,7 +125,6 @@ class AppGenerator extends Generator {
 
   async writing() {
     this.checkProjectPath();
-    this.checkDialect();
 
     const { name } = this.context;
 
