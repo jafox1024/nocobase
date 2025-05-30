@@ -261,14 +261,17 @@ function getSubscriber(
           });
         } else {
           field[fieldName] = lastState?.value;
-          field.data = field.data || {};
-          // 在 FormItem 中有使用这个属性来判断字段是否被隐藏
-          field.data.hidden = false;
 
-          // 当“隐藏（保留值）”的字段再次显示时，恢复“必填”的状态
-          if (fieldName === 'display' && lastState?.value === 'visible' && field.data.prevRequired) {
-            delete field.data.prevRequired;
-            field.required = true;
+          if (fieldName === 'display' && lastState?.value === 'visible') {
+            field.data = field.data || {};
+            // 在 FormItem 中有使用这个属性来判断字段是否被隐藏
+            field.data.hidden = false;
+
+            // 当“隐藏（保留值）”的字段再次显示时，恢复“必填”的状态
+            if (field.data.prevRequired) {
+              delete field.data.prevRequired;
+              field.required = true;
+            }
           }
 
           requestAnimationFrame(() => {
@@ -431,7 +434,7 @@ export async function replaceVariables(
 
   const waitForParsing = value.match(REGEX_OF_VARIABLE_IN_EXPRESSION)?.map(async (item) => {
     const { value: parsedValue } = await variables.parseVariable(item, localVariables, {
-      doNotRequest: item.includes('$nForm'),
+      doNotRequest: item.includes('$nForm') || item.includes('$iteration'),
     });
 
     // 在开头加 `_` 是为了保证 id 不能以数字开头，否则在解析表达式的时候（不是解析变量）会报错

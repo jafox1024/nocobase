@@ -267,7 +267,7 @@ function ManualActionStatusProvider({ value, children }) {
   useEffect(() => {
     if (execution.status || userJob.status) {
       button.disabled = true;
-      button.visible = userJob.status === value && userJob.result._ === buttonSchema.name;
+      button.visible = userJob.status === value && userJob.result?._ === buttonSchema.name;
     }
   }, [execution, userJob, value, button, buttonSchema.name]);
 
@@ -678,10 +678,7 @@ function useTodoActionParams(status) {
   const { data: user } = useCurrentUserContext();
   const filter = StatusFilterMap[status] ?? {};
   return {
-    filter: {
-      ...filter,
-      userId: user?.data?.id,
-    },
+    filter,
     appends: [
       'job.id',
       'job.status',
@@ -733,6 +730,7 @@ function TodoExtraActions() {
 export const manualTodo = {
   title: `{{t("My manual tasks", { ns: "${NAMESPACE}" })}}`,
   collection: 'workflowManualTasks',
+  action: 'listMine',
   useActionParams: useTodoActionParams,
   component: TaskItem,
   extraActions: TodoExtraActions,

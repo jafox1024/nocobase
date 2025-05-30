@@ -599,9 +599,9 @@ const associationFieldToMenu = (
 export const useFilterAssociatedFormItemInitializerFields = () => {
   const { name, fields } = useCollection_deprecated();
   const { getCollectionFields } = useCollectionManager_deprecated();
-  const interfaces = ['o2o', 'oho', 'obo', 'm2o', 'm2m'];
+  const excludedInterfaces = ['attachmentURL'];
   return fields
-    ?.filter((field) => field.target && field.uiSchema && interfaces.includes(field.interface))
+    ?.filter((field) => field.target && field.uiSchema && !excludedInterfaces.includes(field.interface))
     .map((field) => associationFieldToMenu(field, field.name, name, getCollectionFields, []))
     .filter(Boolean);
 };
@@ -734,7 +734,6 @@ export const useCustomFormItemInitializerFields = (options?: any) => {
       const schema = {
         type: 'string',
         name: field.name,
-        title: field?.uiSchema?.title || field.name,
         // 'x-designer': 'FormItem.Designer',
         'x-toolbar': 'FormItemSchemaToolbar',
         'x-settings': 'fieldSettings:FormItem',

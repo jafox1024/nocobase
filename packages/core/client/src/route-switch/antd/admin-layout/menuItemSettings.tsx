@@ -47,6 +47,11 @@ const components = { TreeSelect };
 const toItems = (routes: NocoBaseDesktopRoute[], { t, compile }) => {
   const items = [];
   for (const route of routes) {
+    // filter out the tabs
+    if (route.type === NocoBaseDesktopRouteType.tabs) {
+      continue;
+    }
+
     const item = {
       label: isVariable(route.title) ? compile(route.title) : t(route.title),
       value: `${route.id}||${route.type}`,
@@ -155,7 +160,7 @@ export const RemoveRoute: FC = () => {
 const InsertMenuItems = (props) => {
   const { eventKey, title, insertPosition } = props;
   const { t } = useTranslation();
-  const { urlSchema, paramsSchema } = useURLAndHTMLSchema();
+  const { urlSchema, paramsSchema, openInNewWindowSchema } = useURLAndHTMLSchema();
   const currentRoute = useCurrentRoute();
   const isSubMenu = currentRoute?.type === NocoBaseDesktopRouteType.group;
   const { createRoute, moveRoute } = useNocoBaseRoutes();
@@ -301,10 +306,11 @@ const InsertMenuItems = (props) => {
               },
               href: urlSchema,
               params: paramsSchema,
+              openInNewWindow: openInNewWindowSchema,
             },
           } as ISchema
         }
-        onSubmit={async ({ title, icon, href, params }) => {
+        onSubmit={async ({ title, icon, href, params, openInNewWindow }) => {
           const schemaUid = uid();
           const parentId = insertPosition === 'beforeEnd' ? currentRoute?.id : currentRoute?.parentId;
 
@@ -319,6 +325,7 @@ const InsertMenuItems = (props) => {
             options: {
               href,
               params,
+              openInNewWindow,
             },
           });
 
@@ -360,7 +367,7 @@ const EditMenuItem = () => {
     };
   }, [t]);
   const currentRoute = useCurrentRoute();
-  const { urlSchema, paramsSchema } = useURLAndHTMLSchema();
+  const { urlSchema, paramsSchema, openInNewWindowSchema } = useURLAndHTMLSchema();
   const initialValues = useMemo(() => {
     return {
       title: currentRoute.title,
@@ -370,12 +377,14 @@ const EditMenuItem = () => {
   if (currentRoute.type === NocoBaseDesktopRouteType.link) {
     schema.properties['href'] = urlSchema;
     schema.properties['params'] = paramsSchema;
+    schema.properties['openInNewWindow'] = openInNewWindowSchema;
     initialValues['href'] = currentRoute.options.href;
     initialValues['params'] = currentRoute.options.params;
+    initialValues['openInNewWindow'] = currentRoute.options.openInNewWindow !== false;
   }
 
   const { updateRoute } = useNocoBaseRoutes();
-  const onEditSubmit: (values: any) => void = useCallback(({ title, icon, href, params }) => {
+  const onEditSubmit: (values: any) => void = useCallback(({ title, icon, href, params, openInNewWindow }) => {
     // 更新菜单对应的路由
     if (currentRoute.id !== undefined) {
       updateRoute(currentRoute.id, {
@@ -386,6 +395,7 @@ const EditMenuItem = () => {
             ? {
                 href,
                 params,
+                openInNewWindow,
               }
             : undefined,
       });
